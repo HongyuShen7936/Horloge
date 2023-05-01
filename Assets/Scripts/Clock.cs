@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Clock : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Clock : MonoBehaviour
         backupTime = Time.realtimeSinceStartup;
 
         UpdateTime();
+
+        new UnityEvent().AddListener(PlaySound);
     }
 
     void Update()
@@ -42,5 +45,9 @@ public class Clock : MonoBehaviour
 
         minuteHandOrigin.localRotation = Quaternion.Euler(0.0f, 0.0f, (minute + second / 60.0f) * minuteDegree);
         hourHandOrigin.localRotation = Quaternion.Euler(0.0f, 0.0f, (hour + minute / 60.0f + second / 3600.0f) * hourDegree);
+    }
+
+    void PlaySound() {
+        this.GetComponent<AudioSource>().Play();
     }
 }
