@@ -4,6 +4,8 @@ using UnityEngine.Events;
 
 public class Clock : MonoBehaviour
 {
+    public int timeSourceId = 0;
+
     private float second = 0.0f, minute = 0.0f, hour = 0.0f;
     public Transform minuteHandOrigin, hourHandOrigin;
 
@@ -43,9 +45,30 @@ public class Clock : MonoBehaviour
     {
         dateTime = System.DateTime.Now;
 
-        second = dateTime.Second;
-        minute = dateTime.Minute;
-        hour = dateTime.Hour;
+        if (timeSourceId == 0)
+        {
+            ComputerTimeSource computerTimeSource = new ComputerTimeSource();
+
+            second = computerTimeSource.GetSecond();
+            minute = computerTimeSource.GetMinute();
+            hour = computerTimeSource.GetHour();
+        }
+        else if (timeSourceId == 1)
+        {
+            StaticTimeSource staticTimeSource = new StaticTimeSource();
+
+            second = staticTimeSource.GetSecond();
+            minute = staticTimeSource.GetMinute();
+            hour = staticTimeSource.GetHour();
+        }
+        else if (timeSourceId == 2)
+        {
+            ElapsedTimeSource elapsedTimeSource = new ElapsedTimeSource();
+
+            second = elapsedTimeSource.GetSecond();
+            minute = elapsedTimeSource.GetMinute();
+            hour = elapsedTimeSource.GetHour();
+        }
 
         minuteHandOrigin.localRotation = Quaternion.Euler(0.0f, 0.0f, (minute + second / 60.0f) * minuteDegree);
         hourHandOrigin.localRotation = Quaternion.Euler(0.0f, 0.0f, (hour + minute / 60.0f + second / 3600.0f) * hourDegree);

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class LevelObjectManager : MonoBehaviour
 {
+    public static int timeSourceId = 0;
+
     public List<Clock> clockList = new List<Clock>();
 
     public int numberOfClocksToSpawn = 3;
@@ -21,10 +23,15 @@ public class LevelObjectManager : MonoBehaviour
         }
     }
 
-    void SpawnOneClock() {
+    void SpawnOneClock()
+    {
         GameObject newClock = GameObject.Instantiate(Resources.Load("Clock") as GameObject);
 
-        clockList.Add(newClock.GetComponent<Clock>());
+        Clock clock = newClock.GetComponent<Clock>();
+
+        clockList.Add(clock);
+
+        clock.timeSourceId = timeSourceId;
 
         newClock.name = "Clock " + clockList.Count;
 

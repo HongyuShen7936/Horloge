@@ -355,6 +355,8 @@
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.2.17f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/Clock.cs"
 "Assets/Scripts/LevelObjectManager.cs"
+"Assets/Scripts/Menu.cs"
+"Assets/Scripts/ScriptableObject.cs"
 -langversion:9.0
 
 /deterministic
