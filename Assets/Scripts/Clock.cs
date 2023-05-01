@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization.Json;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +18,12 @@ public class Clock : MonoBehaviour
 
     private float backupTime = 0.0f;
 
+    private bool passed = false;
+
+    private UnityEvent soundUnityEvent;
+
+    private UnityEvent passUnityEvent;
+
     void Start()
     {
         minuteDegree = 360.0f / 60.0f;
@@ -26,7 +33,12 @@ public class Clock : MonoBehaviour
 
         UpdateTime();
 
-        new UnityEvent().AddListener(PlaySound);
+        soundUnityEvent = new UnityEvent();
+        soundUnityEvent.AddListener(PlaySound);
+        soundUnityEvent.Invoke();
+
+        passUnityEvent = new UnityEvent();
+        passUnityEvent.AddListener(LogPass);
 
         SetRandomAppearance();
     }
@@ -38,6 +50,19 @@ public class Clock : MonoBehaviour
             backupTime = Time.realtimeSinceStartup;
 
             UpdateTime();
+
+            if (!passed & minuteHandOrigin.localRotation.eulerAngles.z > hourHandOrigin.localRotation.eulerAngles.z)
+            {
+                passed = true;
+
+                passUnityEvent = new UnityEvent();
+                passUnityEvent.AddListener(LogPass);
+                passUnityEvent.Invoke();
+            }
+            else if (passed & minuteHandOrigin.localRotation.eulerAngles.z - hourHandOrigin.localRotation.eulerAngles.z > 5.0f)
+            {
+                passed = false;
+            }
         }
     }
 
@@ -77,6 +102,11 @@ public class Clock : MonoBehaviour
     void PlaySound()
     {
         this.GetComponent<AudioSource>().Play();
+    }
+
+    void LogPass()
+    {
+        GameObject.Find("Scripts").GetComponent<Debug>().LogPass();
     }
 
     void SetRandomAppearance()

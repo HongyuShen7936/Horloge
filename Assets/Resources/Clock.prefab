@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdedc3e46063f1489fcc92093cb473e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeSourceId: 0
   minuteHandOrigin: {fileID: 3267135699326811739}
   hourHandOrigin: {fileID: 8544939948943813704}
   minuteHandSocket: {fileID: 6989439484474813304}
@@ -176,7 +177,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8b3a0372b7854e048aaf98ad5aba950f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
